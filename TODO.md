@@ -1,7 +1,7 @@
 ToDo:
 
- - [ ] .evn + .gitignore
- - [ ] mongodb container to use .env file
+ - [x] .evn + .gitignore
+ - [x] mongodb container to use .env file
  - [ ] /models
  - [ ] /routes
  - [ ] seed w=/faker-js
