@@ -13,3 +13,7 @@ server.route({
         return 'Hello World!';
     }
 });
+
+// would it make a difference if I were to export server here
+// after the GET route is added
+// export server;

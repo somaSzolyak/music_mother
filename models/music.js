@@ -12,3 +12,7 @@ export const musicSchema = new Schema({
 });
 
 export const musicModel = mongoose.model('Music', musicSchema);
+
+export const connectMongoose = async () => {
+    await mongoose.connect('mongodb://localhost:27017');
+};

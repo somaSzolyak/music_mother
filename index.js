@@ -1,10 +1,10 @@
 'use strict';
 
-import mongoose from 'mongoose';
-import server from './routes/index.js'
+import { server } from './routes/index.js'
+import { connectMongoose } from './models/index.js'
 
-const initDB = async () => {
-    await mongoose.connect('mongodb://localhost:27017');
+async function connectDB () {
+    await connectMongoose();
 }
 
 const initHapi = async () => {
@@ -18,7 +18,7 @@ process.on('unhandledRejection', (err) => {
 });
 
 function main() {
-    initDB();
+    connectDB();
     initHapi();
 }
 
