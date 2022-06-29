@@ -1,0 +1,12 @@
+{
+  "name": "music_mother",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^20.2.2",
+    "mongoose": "^6.4.1"
+  }
+}
