@@ -1,15 +1,16 @@
 'use strict';
 
-import { server } from './routes/index.js'
-import { connectMongoose } from './models/index.js'
+import 'dotenv/config'
 
-async function connectDB () {
-    await connectMongoose();
+import { initHapi } from './routes/index.js'
+import { initMongoose } from './models/index.js'
+
+async function initDB () {
+    await initMongoose();
 }
 
-const initHapi = async () => {
-    await server.start();
-    console.log('Server running on %s', server.info.uri);
+async function initServer () {
+    await initHapi();
 };
 
 process.on('unhandledRejection', (err) => {
@@ -17,9 +18,9 @@ process.on('unhandledRejection', (err) => {
     process.exit(1);
 });
 
-function main() {
-    connectDB();
-    initHapi();
+async function main() {
+    await initDB();
+    await initServer();
 }
 
 main();

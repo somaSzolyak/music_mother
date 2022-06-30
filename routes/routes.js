@@ -5,6 +5,11 @@ export const server = _server({
     host: 'localhost'
 });
 
+export const initHapi = async () => {
+    await server.start();
+    console.log('Server running on %s', server.info.uri);
+}
+
 server.route({
     method: 'GET',
     path: '/',
