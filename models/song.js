@@ -11,7 +11,13 @@ export const songSchema = new Schema({
     albumArtUrl: String,
     cnt: Number,
     songDuration: Number,
-    genre: String
+    genre: String,
+    score: {
+        type: Number,
+        default: function() {
+            return this.cnt * this.songDuration;
+        }
+    }
 });
 
 export const Song = mongoose.model('Music', songSchema);
@@ -38,8 +44,20 @@ export function generateData() {
 
 export async function saveSongs() {
     if (isDbAlive()) {
-        // SONGS.forEach((song) => console.log(song.author))
         await Song.bulkSave(SONGS);
         console.log('Saved %d songs', SONGS.length);
     }
+}
+
+export async function saveSong(song) {
+    await song.save();
+    console.log('Song saved %s', song.song);
+}
+
+export async function getTopScoreSongs(limit = 10) {
+    return await Song
+    .find({})
+    .sort({score: -1})
+    .limit(limit)
+    .exec();
 }

@@ -1,4 +1,5 @@
 import { server as _server } from '@hapi/hapi';
+import { getTopScoreSongs } from '../models/index.js';
 
 export const server = _server({
     port: 3000,
@@ -13,9 +14,8 @@ export const initHapi = async () => {
 server.route({
     method: 'GET',
     path: '/',
-    handler: (request, h) => {
-
-        return 'Hello World!';
+    handler: async (request, h) => {
+        return await getTopScoreSongs();
     }
 });
 
