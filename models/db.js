@@ -1,7 +1,7 @@
-import { generateData, saveSongs } from "./index.js";
+import { seedEmptyDatabase } from "./index.js";
 import mongoose from "mongoose";
 
-// Is this file at the right place? Where dóshould it be?
+// Is this file at the right place? Where should it be?
 
 const mongoUser = process.env.MONGO_INITDB_ROOT_USERNAME;
 const mongoPSW = process.env.MONGO_INITDB_ROOT_PASSWORD;
@@ -17,8 +17,7 @@ export const connectMongoose = async () => {
 
 export const initMongoose = async () => {
     await connectMongoose();
-    generateData();
-    await saveSongs();
+    await seedEmptyDatabase();
 }
 
 export function isDbAlive() {

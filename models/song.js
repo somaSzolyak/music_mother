@@ -12,13 +12,15 @@ export const songSchema = new Schema({
     cnt: Number,
     songDuration: Number,
     genre: String,
-    score: {
-        type: Number,
-        default: function() {
-            return this.cnt * this.songDuration;
-        }
-    }
+    score: Number
 });
+
+songSchema.pre('save', function(next) {
+    // ToDo: add checks if cnt and duration are numbers
+    this.score = this.cnt*this.songDuration;
+    console.log('pre save hook calculated %s score for this document', this.id);
+    next();
+})
 
 export const Song = mongoose.model('Music', songSchema);
 
@@ -30,10 +32,19 @@ function createRandomSong() {
         album: faker.lorem.words(),
         song: faker.music.songName(),
         albumArtUrl: faker.image.image(),
-        cnt: faker.datatype.number(),
-        songDuration: faker.datatype.number(),
+        cnt: faker.datatype.number(100),
+        songDuration: faker.datatype.number(100),
         genre: faker.music.genre()
     });
+}
+
+export async function seedEmptyDatabase() {
+    const topSongs = await getTopScoreSongs();
+    if (topSongs.length == 0) {
+        generateData();
+        await saveSongs();
+    }
+    
 }
 
 export function generateData() {
@@ -50,14 +61,44 @@ export async function saveSongs() {
 }
 
 export async function saveSong(song) {
-    await song.save();
-    console.log('Song saved %s', song.song);
+    if (isDbAlive()) {
+        await song.save();
+        console.log('Song saved %s', song.song);
+    }
 }
 
 export async function getTopScoreSongs(limit = 10) {
-    return await Song
-    .find({})
-    .sort({score: -1})
-    .limit(limit)
-    .exec();
+    if (isDbAlive()) {
+        return await Song
+        .find({})
+        .sort({score: -1})
+        .limit(limit)
+        .exec();
+    }
+    return [];
+}
+
+export async function updateTopScoreSong() {
+    const topSongs = await getTopScoreSongs();
+    const topScoreSong = topSongs[0];
+    topScoreSong.cnt += 1;
+    console.log("Updated %s song with +1 count", topScoreSong.song);
+    await saveSong(topScoreSong);
+}
+
+export async function updateSong(song) {
+    if (isDbAlive()) {
+        await song.save();
+    }
+}
+
+export async function deleteSecondTopSong() {
+    const topSongs = await getTopScoreSongs();
+    if (topSongs[1]) {
+        await deleteSong(topSongs[1]);
+    }
+}
+
+export async function deleteSong(song) {
+    await Song.deleteOne(song);
 }
