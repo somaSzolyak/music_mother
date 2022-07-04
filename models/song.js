@@ -26,7 +26,7 @@ export const Song = mongoose.model('Music', songSchema);
 
 export const SONGS = [];
 
-function createRandomSong() {
+export function createRandomSong() {
     return new Song ({
         author: faker.lorem.words(),
         album: faker.lorem.words(),
@@ -40,10 +40,10 @@ function createRandomSong() {
 
 export async function seedEmptyDatabase() {
     const topSongs = await getTopScoreSongs();
-    if (topSongs.length == 0) {
-        generateData();
-        await saveSongs();
-    }
+    // if (topSongs.length == 0) {
+    //     generateData();
+    //     await saveSongs();
+    // }
     
 }
 
@@ -97,6 +97,10 @@ export async function deleteSecondTopSong() {
     if (topSongs[1]) {
         await deleteSong(topSongs[1]);
     }
+}
+
+export async function deleteSongById(songId) {
+    await Song.findByIdAndDelete(songId);
 }
 
 export async function deleteSong(song) {

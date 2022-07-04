@@ -1,5 +1,5 @@
 import { server as _server } from '@hapi/hapi';
-import { getTopScoreSongs } from '../models/index.js';
+import { getTopScoreSongs, createRandomSong, saveSong, deleteSongById } from '../models/index.js';
 
 export const server = _server({
     port: 3000,
@@ -11,6 +11,24 @@ export const initHapi = async () => {
     console.log('Server running on %s', server.info.uri);
 }
 
+// server.route({
+//     method: 'GET',
+//     path: '/favicon.ico',
+//     handler: (request, h) => {
+//         return;
+//     }
+// })
+
+
+server.route({
+    method: 'PUT',
+    path: '/',
+    handler: async (request, h) => {
+        console.log(request.payload);
+        await saveSong(createRandomSong());
+    }
+});
+
 server.route({
     method: 'GET',
     path: '/',
@@ -19,6 +37,10 @@ server.route({
     }
 });
 
-// would it make a difference if I were to export server here
-// after the GET route is added
-// export server;
+server.route({
+    method: 'DELETE',
+    path: '/{songId}',
+    handler: async (request, h) => {
+        await deleteSongById(request.params.songId);
+    }
+});
