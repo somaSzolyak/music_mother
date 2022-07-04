@@ -78,12 +78,23 @@ export async function getTopScoreSongs(limit = 10) {
     return [];
 }
 
+export async function getSongById(songId) {
+    if (isDbAlive()) {
+        return await Song.findById(songId).exec();
+    }
+}
+
 export async function updateTopScoreSong() {
     const topSongs = await getTopScoreSongs();
     const topScoreSong = topSongs[0];
     topScoreSong.cnt += 1;
     console.log("Updated %s song with +1 count", topScoreSong.song);
     await saveSong(topScoreSong);
+}
+
+export async function updateSongCnt(song) {
+    song.cnt += 1;
+    await updateSong(song);
 }
 
 export async function updateSong(song) {
