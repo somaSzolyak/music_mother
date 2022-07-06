@@ -1,14 +1,18 @@
 'use strict';
-import mongoose from 'mongoose';
-import { connectMongoose, seedEmptyDatabase } from '../models/index.js'
 
+import mongoose from 'mongoose';
+import { connectMongoose, seedDatabase } from '../models/index.js'
 
 async function seed() {
-    await connectMongoose();
-    await seedEmptyDatabase();
-    await mongoose.disconnect();
+    console.log("seeding DB")
+    try {
+        await connectMongoose();
+        await seedDatabase();
+    } finally {
+        await mongoose.disconnect();
+    }
 }
 
-seed();
+await seed();
 
 process.exit();

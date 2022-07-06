@@ -7,8 +7,7 @@ ToDo:
  - [x] /routes for CRUD
  - [x] favicon.ico serve as static file
  - [x] dockerize node app + .dockeringore
- - [ ] seed w=/faker-js
- - [ ] add seed to docker cmd
+ - [x] seed w=/faker-js
  - [ ] update relative path for favicon
  - [ ] scripts/seed.js
  - [ ] Auth endpoints
@@ -16,3 +15,10 @@ ToDo:
  - [ ] POST /login
  - [ ] GET /me
  - [ ] POST /logout
+
+Refactors: 
+- [ ] delete use strict
+- [ ] refactor leacking abtraction in index.js
+- [ ] refactor "/" endpoints
+- [ ] separate create and update functionalilies to separate endpoints
+- [ ] all endpoints should return with JSON or only with status code
