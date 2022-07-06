@@ -7,9 +7,13 @@ import * as inert from '@hapi/inert';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+const hapiPort = process.env.HAPI_PORT;
+const hapiHost = process.env.HAPI_HOST;
+const hapiBaseUri = hapiHost+':'+hapiPort;
+
 export const server = _server({
-    port: 3000,
-    host: '0.0.0.0',
+    port: hapiPort,
+    host: hapiHost,
     routes: {
         files: {
             relativeTo: path.join(__dirname, '../static')
@@ -33,21 +37,34 @@ server.route({
     }
 })
 
+server.route({
+    method: 'POST',
+    path: '/songs',
+    handler: async (request, h) => {
+        // todo: check body
+        const song = new Song(request.payload);
+        await saveSong(song);
+        return h.response('created').code(201);
+    }
+})
+
 
 server.route({
     method: 'PUT',
-    path: '/',
+    path: '/songs',
     handler: async (request, h) => {
         console.log(request.payload._id);
-        let song = await getSongById(request.payload._id);
-        if (song) {
-            await updateSongCnt(song)
-            return h.response('updated').code(200);
-        }
-        // todo: check body
-        song = new Song(request.payload);
-        await saveSong(song);
-        return h.response('created').code(201);
+        const song = new Song(request.payload);
+        await updateSongCnt(song);
+        return h.response('updated').code(200);
+    }
+});
+
+server.route({
+    method: 'GET',
+    path: '/songs',
+    handler: async (request, h) => {
+        return {"message": await getTopScoreSongs()};
     }
 });
 
@@ -55,7 +72,7 @@ server.route({
     method: 'GET',
     path: '/',
     handler: async (request, h) => {
-        return await getTopScoreSongs();
+        return h.redirect("/songs");
     }
 });
 

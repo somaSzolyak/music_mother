@@ -9,7 +9,7 @@ const DB = mongoose.connection;
 
 export const connectMongoose = async () => {
     await mongoose.connect(
-        'mongodb://'+mongoUser+':'+mongoPSW+'@mongodb:27017'
+        'mongodb://'+mongoUser+':'+mongoPSW+'@localhost:27017'
         );
     console.log('Connected to mongoDB')
 };

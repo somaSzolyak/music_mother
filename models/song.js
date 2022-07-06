@@ -15,12 +15,15 @@ export const songSchema = new Schema({
     score: Number
 });
 
-songSchema.pre('save', function(next) {
+songSchema.pre('save', calculateScore);
+songSchema.pre('updateOne', calculateScore);
+
+function calculateScore (next) {
     // ToDo: add checks if cnt and duration are numbers
     this.score = this.cnt*this.songDuration;
-    console.log('pre save hook calculated %s score for this document', this.id);
+    // console.log('pre hook calculated %s score for this document', this.id);
     next();
-})
+}
 
 export const Song = mongoose.model('Music', songSchema);
 
@@ -90,8 +93,8 @@ export async function updateTopScoreSong() {
 }
 
 export async function updateSongCnt(song) {
-    song.cnt += 1;
-    await updateSong(song);
+    console.log('updateOne');
+    await Song.updateOne({_id: song._id}, {$inc : {'cnt' : 1}}).exec();
 }
 
 export async function updateSong(song) {

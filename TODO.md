@@ -19,6 +19,6 @@ ToDo:
 Refactors: 
 - [x] delete use strict
 - [x] refactor leacking abtraction in index.js
-- [ ] refactor "/" endpoints
-- [ ] separate create and update functionalilies to separate endpoints
+- [x] refactor "/" endpoints
+- [x] separate create and update functionalilies to separate endpoints
 - [ ] all endpoints should return with JSON or only with status code
