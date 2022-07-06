@@ -1,4 +1,3 @@
-import { seedEmptyDatabase } from "./index.js";
 import mongoose from "mongoose";
 
 // Is this file at the right place? Where should it be?
@@ -14,8 +13,7 @@ export const connectMongoose = async () => {
         );
     console.log('Connected to mongoDB')
 };
-
-export const initMongoose = async () => {
+export async function initDB () {
     await connectMongoose();
 }
 

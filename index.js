@@ -1,18 +1,7 @@
 import 'dotenv/config'
 
-import { initHapi } from './routes/index.js'
-import { initMongoose } from './models/index.js'
-// Are index files a good practice?
-
-// Is there a way to get rid of the await's here?
-// I have already waited for the results within these functions
-async function initDB () {
-    await initMongoose();
-}
-
-async function initServer () {
-    await initHapi();
-};
+import { initServer } from './routes/index.js'
+import { initDB } from './models/index.js'
 
 process.on('unhandledRejection', (err) => {
     console.log(err);

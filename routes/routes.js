@@ -17,7 +17,7 @@ export const server = _server({
     }
 });
 
-export const initHapi = async () => {
+export const initServer = async () => {
     await server.register(inert);
     await server.start();
     console.log('Server running on %s', server.info.uri);

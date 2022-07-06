@@ -38,12 +38,9 @@ export function createRandomSong() {
     });
 }
 
-export async function seedEmptyDatabase() {
-    const topSongs = await getTopScoreSongs();
-    if (topSongs.length == 0) {
-        generateData();
-        await saveSongs();
-    }
+export async function seedDatabase() {
+    generateData();
+    await saveSongs();
     
 }
 
