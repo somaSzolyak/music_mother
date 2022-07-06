@@ -1,5 +1,3 @@
-'use strict';
-
 import 'dotenv/config'
 
 import { initHapi } from './routes/index.js'
