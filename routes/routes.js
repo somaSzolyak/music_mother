@@ -56,7 +56,7 @@ server.route({
         console.log(request.payload._id);
         const song = new Song(request.payload);
         await updateSongCnt(song);
-        return h.response('updated').code(200);
+        return h.response({'messsage': 'updated'}).code(200);
     }
 });
 
@@ -64,7 +64,7 @@ server.route({
     method: 'GET',
     path: '/songs',
     handler: async (request, h) => {
-        return {"message": await getTopScoreSongs()};
+        return h.response({"message": await getTopScoreSongs()}).code(200);
     }
 });
 
@@ -81,6 +81,6 @@ server.route({
     path: '/{songId}',
     handler: async (request, h) => {
         await deleteSongById(request.params.songId);
-        return h.response('deleted '+request.params.songId).code(200);
+        return h.response( {'messsage': 'deleted '+request.params.songId}).code(200);
     }
 });

@@ -21,4 +21,4 @@ Refactors:
 - [x] refactor leacking abtraction in index.js
 - [x] refactor "/" endpoints
 - [x] separate create and update functionalilies to separate endpoints
-- [ ] all endpoints should return with JSON or only with status code
+- [x] all endpoints should return with JSON or only with status code
