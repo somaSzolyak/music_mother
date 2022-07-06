@@ -40,10 +40,10 @@ export function createRandomSong() {
 
 export async function seedEmptyDatabase() {
     const topSongs = await getTopScoreSongs();
-    // if (topSongs.length == 0) {
-    //     generateData();
-    //     await saveSongs();
-    // }
+    if (topSongs.length == 0) {
+        generateData();
+        await saveSongs();
+    }
     
 }
 

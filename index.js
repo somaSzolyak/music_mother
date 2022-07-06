@@ -3,7 +3,7 @@
 import 'dotenv/config'
 
 import { initHapi } from './routes/index.js'
-import { initMongoose, updateTopScoreSong } from './models/index.js'
+import { initMongoose } from './models/index.js'
 // Are index files a good practice?
 
 // Is there a way to get rid of the await's here?

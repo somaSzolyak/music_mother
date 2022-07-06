@@ -9,10 +9,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const server = _server({
     port: 3000,
-    host: 'localhost',
+    host: '0.0.0.0',
     routes: {
         files: {
-            relativeTo: path.join(__dirname, '..')
+            relativeTo: path.join(__dirname, '../static')
         }
     }
 });

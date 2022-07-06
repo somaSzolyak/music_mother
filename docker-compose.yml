@@ -1,10 +1,18 @@
 version: '3.7'
 services:
-  mongodb_container:
+  mongodb:
     image: mongo:latest
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     ports:
       - ${MONGO_PORT}:${MONGO_PORT}
-    
+
+  webapp:
+    build: .
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
