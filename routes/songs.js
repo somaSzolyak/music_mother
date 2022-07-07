@@ -8,7 +8,7 @@ server.route({
         // todo: check body
         const song = new Song(request.payload);
         await saveSong(song);
-        return h.response('created').code(201);
+        return h.response({'message': 'created'}).code(201);
     }
 })
 

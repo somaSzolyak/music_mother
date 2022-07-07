@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { faker } from '@faker-js/faker'
-import { isDbAlive } from './index.js'
 
 const { Schema } = mongoose;
 
