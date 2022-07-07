@@ -10,7 +10,7 @@ ToDo:
  - [x] seed w=/faker-js
  - [x] update relative path for favicon
  - [x] scripts/seed.js
- - [ ] Auth endpoints
+ - [x] Auth endpoints
  - [ ] POST /register + POST /login
  - [ ] hash
  - [ ] salt
