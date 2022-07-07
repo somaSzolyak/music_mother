@@ -1,11 +1,10 @@
 import { server as _server } from '@hapi/hapi';
 import { getTopScoreSongs, saveSong, deleteSongById, getSongById, updateSongCnt, Song } from '../models/index.js';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import * as path from 'path';
 import * as inert from '@hapi/inert';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hapiPort = process.env.HAPI_PORT;
 const hapiHost = process.env.HAPI_HOST;

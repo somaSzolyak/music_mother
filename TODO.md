@@ -15,6 +15,7 @@ ToDo:
  - [ ] POST /login
  - [ ] GET /me
  - [ ] POST /logout
+ - [ ] update .env.example
 
 Refactors: 
 - [x] delete use strict
@@ -22,4 +23,4 @@ Refactors:
 - [x] refactor "/" endpoints
 - [x] separate create and update functionalilies to separate endpoints
 - [x] all endpoints should return with JSON or only with status code
-- [ ] imports fix
+- [x] imports fix
