@@ -19,7 +19,3 @@ export const connectMongoose = async () => {
 export async function initDB () {
     await connectMongoose();
 }
-
-export function isDbAlive() {
-    return DB.db != null && DB.db != undefined;
-}

@@ -27,8 +27,6 @@ function calculateScore (next) {
 
 export const Song = mongoose.model('Music', songSchema);
 
-export const SONGS = [];
-
 export function createRandomSong() {
     return new Song ({
         author: faker.lorem.words(),
@@ -42,46 +40,35 @@ export function createRandomSong() {
 }
 
 export async function seedDatabase() {
-    generateData();
-    await saveSongs();
-    
+    await saveSongs(generateData());
 }
 
 export function generateData() {
-    Array.from({length: faker.datatype.number(100)}).forEach(() => {
-        SONGS.push(createRandomSong());
+    return Array.from({length: faker.datatype.number(100)}).map((song) => {
+        song = createRandomSong();
     })
 }
 
-export async function saveSongs() {
-    if (isDbAlive()) {
-        await Song.bulkSave(SONGS);
-        console.log('Saved %d songs', SONGS.length);
-    }
+export async function saveSongs(songs) {
+    await Song.bulkSave(songs);
+    console.log('Saved %d songs', songs.length);
 }
 
 export async function saveSong(song) {
-    if (isDbAlive()) {
-        await song.save();
-        console.log('Song saved %s', song.song);
-    }
+    await song.save();
+    console.log('Song saved %s', song.song);
 }
 
 export async function getTopScoreSongs(limit = 10) {
-    if (isDbAlive()) {
-        return await Song
-        .find({})
-        .sort({score: -1})
-        .limit(limit)
-        .exec();
-    }
-    return [];
+    return await Song
+    .find({})
+    .sort({score: -1})
+    .limit(limit)
+    .exec();
 }
 
 export async function getSongById(songId) {
-    if (isDbAlive()) {
-        return await Song.findById(songId).exec();
-    }
+    return await Song.findById(songId).exec();
 }
 
 export async function updateTopScoreSong() {
@@ -98,9 +85,7 @@ export async function updateSongCnt(song) {
 }
 
 export async function updateSong(song) {
-    if (isDbAlive()) {
-        await song.save();
-    }
+    await song.save();
 }
 
 export async function deleteSecondTopSong() {

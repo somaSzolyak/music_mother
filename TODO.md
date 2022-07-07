@@ -11,8 +11,9 @@ ToDo:
  - [x] update relative path for favicon
  - [x] scripts/seed.js
  - [ ] Auth endpoints
- - [ ] POST /register
- - [ ] POST /login
+ - [ ] POST /register + POST /login
+ - [ ] hash
+ - [ ] salt
  - [ ] GET /me
  - [ ] POST /logout
  - [ ] update .env.example
@@ -24,3 +25,5 @@ Refactors:
 - [x] separate create and update functionalilies to separate endpoints
 - [x] all endpoints should return with JSON or only with status code
 - [x] imports fix
+- [x] rip isDbAlive
+- [x] pass SONGS as arguments // delete global songs
