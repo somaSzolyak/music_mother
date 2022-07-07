@@ -8,8 +8,8 @@ ToDo:
  - [x] favicon.ico serve as static file
  - [x] dockerize node app + .dockeringore
  - [x] seed w=/faker-js
- - [ ] update relative path for favicon
- - [ ] scripts/seed.js
+ - [x] update relative path for favicon
+ - [x] scripts/seed.js
  - [ ] Auth endpoints
  - [ ] POST /register
  - [ ] POST /login
@@ -22,3 +22,4 @@ Refactors:
 - [x] refactor "/" endpoints
 - [x] separate create and update functionalilies to separate endpoints
 - [x] all endpoints should return with JSON or only with status code
+- [ ] imports fix
