@@ -10,6 +10,7 @@
   "dependencies": {
     "@hapi/hapi": "^20.2.2",
     "@hapi/inert": "^6.0.5",
+    "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "mongoose": "^6.4.1"
   },
