@@ -1,7 +1,6 @@
 import 'dotenv/config'
 
-import { initServer } from './routes/index.js'
-import { initDB } from './models/index.js'
+import { initServer, initDB } from './config/index.js'
 
 process.on('unhandledRejection', (err) => {
     console.log(err);
@@ -9,8 +8,12 @@ process.on('unhandledRejection', (err) => {
 });
 
 async function main() {
-    await initDB();
-    await initServer();
+    try {
+        await initDB();
+        await initServer();
+    } catch(err) {
+        console.log(err);
+    }
 }
 
 main();

@@ -36,5 +36,5 @@ export async function register (username, password) {
 export async function login (username, password) {
     const user = await User.findOne({username: username}).exec();
     const result = await bcrypt.compare(password, user.password);
-    return result;
+    return result ? user : result;
 }

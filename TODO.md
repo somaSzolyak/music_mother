@@ -11,9 +11,11 @@ ToDo:
  - [x] update relative path for favicon
  - [x] scripts/seed.js
  - [x] Auth endpoints
- - [ ] POST /register + POST /login
- - [ ] hash
- - [ ] salt
+ - [x] POST /register + POST /login
+ - [x] hash
+ - [?] salt
+ - [ ] jwt token sign & return with login
+ - [ ] happi middleware to check and verify jwt tokens for auth protected routs
  - [ ] GET /me
  - [ ] POST /logout
  - [ ] update .env.example

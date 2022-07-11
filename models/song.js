@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { faker } from '@faker-js/faker'
+import { faker } from '@faker-js/faker';
 
 const { Schema } = mongoose;
 
@@ -20,7 +20,6 @@ songSchema.pre('updateOne', calculateScore);
 function calculateScore (next) {
     // ToDo: add checks if cnt and duration are numbers
     this.score = this.cnt*this.songDuration;
-    // console.log('pre hook calculated %s score for this document', this.id);
     next();
 }
 
@@ -34,7 +33,8 @@ export function createRandomSong() {
         albumArtUrl: faker.image.image(),
         cnt: faker.datatype.number(100),
         songDuration: faker.datatype.number(100),
-        genre: faker.music.genre()
+        genre: faker.music.genre(),
+        score: 0
     });
 }
 
@@ -43,9 +43,7 @@ export async function seedDatabase() {
 }
 
 export function generateData() {
-    return Array.from({length: faker.datatype.number(100)}).map((song) => {
-        song = createRandomSong();
-    })
+    return  Array.from({length: faker.datatype.number(2)}).map(song => song = createRandomSong());
 }
 
 export async function saveSongs(songs) {

@@ -1,7 +1,8 @@
-import { server as _server } from '@hapi/hapi';
-import { fileURLToPath } from 'url';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import * as inert from '@hapi/inert';
+import { server as _server } from '@hapi/hapi';
+import { songRouts, authRoutes } from '../routes/index.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -21,16 +22,19 @@ export const server = _server({
 
 export const initServer = async () => {
     await server.register(inert);
+    server.route([...songRouts, ...authRoutes, ...staticFileRoutes]);
     await server.start();
     console.log('Server running on %s', server.info.uri);
 }
 
-server.route({
-    method: 'GET',
-    path: '/favicon.ico',
-    handler: (request, h) => {
-        return h.file('favicon.ico')
-        .code(200)
-        .type('image/x-icon');
+const staticFileRoutes = [
+    {
+        method: 'GET',
+        path: '/favicon.ico',
+        handler: (request, h) => {
+            return h.file('favicon.ico')
+            .code(200)
+            .type('image/x-icon');
+        }
     }
-})
+];
