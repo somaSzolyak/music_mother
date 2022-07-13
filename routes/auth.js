@@ -1,4 +1,4 @@
-import { register, login } from '../models/index.js';
+import { register, login, getMe } from '../models/index.js';
 import { getToken } from '../middleware/index.js';
 
 export const authRoutes = [
@@ -7,6 +7,12 @@ export const authRoutes = [
         path: '/register',
         handler: async (request, h) => {
             const {username, password} = request.payload;
+            if (!(username && password)) {
+                h.response('Username and password required').code(400);
+            }
+            if (await getMe(username)) {
+                h.response('User already exists.').code(409);
+            }
             await register(username, password);
             const response = {'message': 'register successful'};
             return h.response(response).code(200);
@@ -19,6 +25,9 @@ export const authRoutes = [
         handler: async (request, h) => {
             try {
                 const {username, password} = request.payload;
+                if (!(username && password)) {
+                    h.response('Username and password required').code(400);
+                }
                 const user = await login(username, password);
                 if(user) {
                     const token = getToken(user);
