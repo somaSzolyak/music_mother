@@ -1,16 +1,16 @@
-import * as path from 'path';
-import { fileURLToPath } from 'url';
-import * as inert from '@hapi/inert';
-import { server as _server } from '@hapi/hapi';
-import { songRouts, authRoutes } from '../routes/index.js';
+const path = require('path');
+// const { fileURLToPath } = require('url');
+const inert = require('@hapi/inert');
+const { server: _server }= require('@hapi/hapi');
+const { auth, songs } = require('../routes/index.js');
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hapiPort = process.env.HAPI_PORT;
 const hapiHost = process.env.HAPI_HOST;
 const hapiBaseUri = hapiHost+':'+hapiPort;
 
-export const server = _server({
+const server = _server({
     port: hapiPort,
     host: hapiHost,
     routes: {
@@ -20,11 +20,16 @@ export const server = _server({
     }
 });
 
-export const initServer = async () => {
+initServer = async () => {
     await server.register(inert);
-    server.route([...songRouts, ...authRoutes, ...staticFileRoutes]);
+    server.route([...songs.songRouts, ...auth.authRoutes, ...staticFileRoutes]);
     await server.start();
     console.log('Server running on %s', server.info.uri);
+}
+
+stopServer = async () => {
+    await server.stop();
+    console.log('server stopped');
 }
 
 const staticFileRoutes = [
@@ -38,3 +43,9 @@ const staticFileRoutes = [
         }
     }
 ];
+
+module.exports = {
+    server,
+    initServer,
+    stopServer
+}

@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
-import { faker } from '@faker-js/faker';
+const mongoose = require('mongoose');
+const { faker } = require('@faker-js/faker');
 
 const { Schema } = mongoose;
 
-export const songSchema = new Schema({
+const songSchema = new Schema({
     author: String,
     album: String,
     song: String,
@@ -23,9 +23,9 @@ function calculateScore (next) {
     next();
 }
 
-export const Song = mongoose.model('Music', songSchema);
+const Song = mongoose.model('Music', songSchema);
 
-export function createRandomSong() {
+function createRandomSong() {
     return new Song ({
         author: faker.lorem.words(),
         album: faker.lorem.words(),
@@ -38,25 +38,25 @@ export function createRandomSong() {
     });
 }
 
-export async function seedDatabase() {
+const seedDatabase = async () => {
     await saveSongs(generateData());
 }
 
-export function generateData() {
+function generateData() {
     return  Array.from({length: faker.datatype.number(2)}).map(song => song = createRandomSong());
 }
 
-export async function saveSongs(songs) {
+const saveSongs = async (songs) => {
     await Song.bulkSave(songs);
     console.log('Saved %d songs', songs.length);
 }
 
-export async function saveSong(song) {
+const saveSong = async (song) => {
     await song.save();
     console.log('Song saved %s', song.song);
 }
 
-export async function getTopScoreSongs(limit = 10) {
+const getTopScoreSongs = async (limit = 10) => {
     return await Song
     .find({})
     .sort({score: -1})
@@ -64,11 +64,11 @@ export async function getTopScoreSongs(limit = 10) {
     .exec();
 }
 
-export async function getSongById(songId) {
+const getSongById = async (songId) => {
     return await Song.findById(songId).exec();
 }
 
-export async function updateTopScoreSong() {
+const updateTopScoreSong = async () => {
     const topSongs = await getTopScoreSongs();
     const topScoreSong = topSongs[0];
     topScoreSong.cnt += 1;
@@ -76,26 +76,43 @@ export async function updateTopScoreSong() {
     await saveSong(topScoreSong);
 }
 
-export async function updateSongCnt(song) {
+const updateSongCnt = async (song) => {
     console.log('updateOne');
     await Song.updateOne({_id: song._id}, {$inc : {'cnt' : 1}}).exec();
 }
 
-export async function updateSong(song) {
+const updateSong = async (song) => {
     await song.save();
 }
 
-export async function deleteSecondTopSong() {
+const deleteSecondTopSong = async () => {
     const topSongs = await getTopScoreSongs();
     if (topSongs[1]) {
         await deleteSong(topSongs[1]);
     }
 }
 
-export async function deleteSongById(songId) {
+const deleteSongById = async (songId) => {
     await Song.findByIdAndDelete(songId);
 }
 
-export async function deleteSong(song) {
+const deleteSong = async (song) => {
     await Song.deleteOne(song);
+}
+
+module.exports = {
+    songSchema,
+    Song,
+    seedDatabase,
+    generateData,
+    saveSongs,
+    saveSong,
+    getTopScoreSongs,
+    getSongById,
+    updateTopScoreSong,
+    updateSongCnt,
+    updateSong,
+    deleteSecondTopSong,
+    deleteSongById,
+    deleteSong
 }

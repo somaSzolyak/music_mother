@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
 const secret = process.env.SECRET;
 
-export function getToken(user) {
+function getToken(user) {
     try {
         const token = jwt.sign({username: user.username}, secret, {expiresIn: '1h'});
         return token;
@@ -12,12 +12,12 @@ export function getToken(user) {
     
 }
 
-export function getDecodedToken(token) {
+function getDecodedToken(token) {
     const decodedToken = jwt.verify(token, secret);
     return decodedToken;
 }
 
-export function verifyToken(req, h, next) {
+function verifyToken(req, h, next) {
     const token = req.body.token || req.query.token || req.headers["x-access-token"];
 
     if (!token) {
@@ -31,4 +31,10 @@ export function verifyToken(req, h, next) {
     }
 
     return next();
+}
+
+module.exports = {
+    getToken,
+    getDecodedToken,
+    verifyToken
 }

@@ -1,13 +1,15 @@
-import { getTopScoreSongs, saveSong, deleteSongById, updateSongCnt, Song } from '../models/index.js';
+const { song } = require('../models/index.js');
 
-export const songRouts = [
+const { Song } = song;
+
+module.exports.songRouts = [
     {
         method: 'POST',
         path: '/songs',
         handler: async (request, h) => {
             // todo: check body
             const song = new Song(request.payload);
-            await saveSong(song);
+            await song.saveSong(song);
             return h.response({'message': 'created'}).code(201);
         }
     },
@@ -17,8 +19,8 @@ export const songRouts = [
         handler: async (request, h) => {
             console.log(request.payload._id);
             if (request.payload._id) {
-                const song = new Song(request.payload);
-                await updateSongCnt(song);
+                const newSong = new Song(request.payload);
+                await song.updateSongCnt(newSong);
                 return h.response({'messsage': 'updated'}).code(200);
             }
             return h.response({'messsage': 'unsuccessfull update'}).code(400);
@@ -28,7 +30,7 @@ export const songRouts = [
         method: 'GET',
         path: '/songs',
         handler: async (request, h) => {
-            return h.response({"message": await getTopScoreSongs()}).code(200);
+            return h.response({"message": await song.getTopScoreSongs()}).code(200);
         }
     },
     {
@@ -42,7 +44,7 @@ export const songRouts = [
         method: 'DELETE',
         path: '/{songId}',
         handler: async (request, h) => {
-            await deleteSongById(request.params.songId);
+            await song.deleteSongById(request.params.songId);
             return h.response( {'messsage': 'deleted '+request.params.songId}).code(200);
         }
     }

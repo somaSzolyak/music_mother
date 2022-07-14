@@ -1,11 +1,11 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
 const { Schema } = mongoose;
 
-export const userSchema = new Schema({
+const userSchema = new Schema({
     username: {
         type: String,
         unique: true,
@@ -17,9 +17,9 @@ export const userSchema = new Schema({
     }
 });
 
-export const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
-export async function register (username, password) {
+const register = async (username, password) => {
     const hash = await bcrypt.hash(password, saltRounds);
     await new User({
         username: username,
@@ -27,16 +27,25 @@ export async function register (username, password) {
     }).save();
 }
 
-export async function login (username, password) {
+const login = async (username, password) => {
     const user = await User.findOne({username: username}).exec();
     const result = await bcrypt.compare(password, user.password);
     return result ? user : result;
 }
 
-export async function getMe (username) {
+const getMe = async (username) => {
     return await User.findOne({username}).exec();
 }
 
-export async function clearUsers() {
+const clearUsers = async () => {
     return await User.remove({});
+}
+
+module.exports = {
+    userSchema,
+    User,
+    register,
+    login,
+    getMe,
+    clearUsers
 }

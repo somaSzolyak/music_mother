@@ -1,6 +1,6 @@
-import 'dotenv/config';
+require('dotenv/config');
 
-import { initServer, initDB } from './config/index.js';
+const { hapi, db } = require('./config/index.js');
 
 process.on('unhandledRejection', (err) => {
     console.log(err);
@@ -9,8 +9,8 @@ process.on('unhandledRejection', (err) => {
 
 async function main() {
     try {
-        await initDB();
-        await initServer();
+        await db.initDB();
+        await hapi.initServer();
     } catch(err) {
         console.log(err);
     }

@@ -1,1 +1,5 @@
-export * from './jwt.js';
+// export * from './jwt.js';
+
+module.exports = {
+    jwt: require('./jwt.js')
+}
