@@ -1,6 +1,6 @@
-import 'dotenv/config'
+import 'dotenv/config';
 
-import { initServer, initDB } from './config/index.js'
+import { initServer, initDB } from './config/index.js';
 
 process.on('unhandledRejection', (err) => {
     console.log(err);

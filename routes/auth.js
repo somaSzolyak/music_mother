@@ -15,8 +15,7 @@ export const authRoutes = [
             }
             await register(username, password);
             const response = {'message': 'register successful'};
-            return h.response(response).code(200);
-            
+            return h.response(response).code(201);
         }
     },
     {

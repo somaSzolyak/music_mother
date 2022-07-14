@@ -36,3 +36,7 @@ export async function login (username, password) {
 export async function getMe (username) {
     return await User.findOne({username}).exec();
 }
+
+export async function clearUsers() {
+    return await User.remove({});
+}
