@@ -21,7 +21,7 @@ const User = mongoose.model('User', userSchema);
 
 const register = async (username, password) => {
     const hash = await bcrypt.hash(password, saltRounds);
-    await new User({
+    return await new User({
         username: username,
         password: hash
     }).save();

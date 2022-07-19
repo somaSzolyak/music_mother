@@ -11,11 +11,17 @@ module.exports.authRoutes = [
             if (!(username && password)) {
                 return h.response({message: 'Username and password required'}).code(400);
             }
+            if (typeof username != 'string' || typeof password != 'string') {
+                return h.response({message: 'Username and password have incorrect format'}).code(400);
+            }
             if (await user.getMe(username)) {
                 return h.response({message: 'User already exists.'}).code(409);
             }
-            await user.register(username, password);
-            const response = {'message': 'register successful'};
+            const newUser = await user.register(username, password);
+            const response = {
+                'message': 'register successful',
+                'user': newUser
+            };
             return h.response(response).code(201);
             } catch(err) {
                 console.log(err);
